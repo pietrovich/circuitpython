@@ -1,6 +1,8 @@
 USB_VID = 0x2E8A
-// 1x USB Type-C + 1x USB Type A :D
-USB_PID = 0x1C1A
+# this pid is reported for a brand new device with stock firmware
+USB_PID = 0x0009
+# though it'd better be 1x USB Type-C + 1x USB Type A = 0x1c1a IMHO :D
+# USB_PID = 0x1C1A
 USB_PRODUCT = "RP2350-Usb-A"
 USB_MANUFACTURER = "Waveshare Electronics"
 
