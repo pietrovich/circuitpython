@@ -15,6 +15,12 @@
 #include "supervisor/port.h"
 #include "supervisor/usb.h"
 
+// Polling interval of the HID endpoints, in ms at full speed. A board can define a smaller value in
+// mpconfigboard.h (2 = 500 Hz, 1 = 1000 Hz); the default stays 8 (125 Hz).
+#ifndef CIRCUITPY_USB_HID_BINTERVAL
+#define CIRCUITPY_USB_HID_BINTERVAL 8
+#endif
+
 static const uint8_t usb_hid_descriptor_template[] = {
     0x09,        //  0 bLength
     0x04,        //  1 bDescriptorType (Interface)
@@ -45,7 +51,7 @@ static const uint8_t usb_hid_descriptor_template[] = {
 #define HID_IN_ENDPOINT_INDEX (20)
     0x03,        // 21 bmAttributes (Interrupt)
     0x40, 0x00,  // 22,23  wMaxPacketSize 64
-    0x08,        // 24 bInterval 8 (unit depends on device speed)
+    CIRCUITPY_USB_HID_BINTERVAL,  // 24 bInterval (unit depends on device speed; 1 ms frames at full speed)
 
     0x07,        // 25 bLength
     0x05,        // 26 bDescriptorType (Endpoint)
@@ -53,7 +59,7 @@ static const uint8_t usb_hid_descriptor_template[] = {
 #define HID_OUT_ENDPOINT_INDEX (27)
     0x03,        // 28 bmAttributes (Interrupt)
     0x40, 0x00,  // 29,30 wMaxPacketSize 64
-    0x08,        // 31 bInterval 8 (unit depends on device speed)
+    CIRCUITPY_USB_HID_BINTERVAL,  // 31 bInterval (unit depends on device speed)
 };
 
 #define MAX_HID_DEVICES 8
