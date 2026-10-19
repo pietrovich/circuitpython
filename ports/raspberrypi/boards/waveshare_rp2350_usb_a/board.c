@@ -12,7 +12,5 @@
 #include "hardware/gpio.h"
 
 void board_init(void) {
-    // Deliberately empty: the USB host port (GPIO12 = D+, GPIO13 = D-) is NOT created at boot.
-    // This leaves the USB-A pins free so they can be used as a PIO UART; Python code creates the
-    // host with usb_host.Port(board.USB_HOST_DATA_PLUS, board.USB_HOST_DATA_MINUS) when needed.
+    common_hal_usb_host_port_construct(&pin_GPIO12, &pin_GPIO13);
 }
